@@ -30,6 +30,11 @@ class BankController {
       throw NotAuthenticatedSenderException(idSender: idSender);
     }
 
+    // Verificar se o destinatário está autenticado
+    if (!accountReceiver.isAuthenticated) {
+      throw NotAuthenticatedReceiverException(idReceiver: idReceiver);
+    }
+
     // Verificar se o remetente possui saldo suficiente
     if (accountSender.balance < amount) {
       throw SenderBalanceLowerThanAmountException(idSender: idSender, senderBalance: accountSender.balance, amount: amount);
